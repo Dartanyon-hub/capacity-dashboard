@@ -11,16 +11,16 @@
     --cap-3: #e89b3a;
     --cap-4: #3db8a0;
     --cap-5: #1aa88a;
-    --cap-1-bg: rgba(212, 51, 74, 0.35);
-    --cap-2-bg: rgba(224, 104, 48, 0.30);
-    --cap-3-bg: rgba(232, 155, 58, 0.28);
-    --cap-4-bg: rgba(61, 184, 160, 0.28);
-    --cap-5-bg: rgba(26, 168, 138, 0.32);
-    --bg: #1a1a2e;
-    --surface: #16213e;
-    --text: #e0e0e0;
-    --text-muted: #8892a4;
-    --border: rgba(255,255,255,0.06);
+    --cap-1-bg: rgba(212, 51, 74, 0.12);
+    --cap-2-bg: rgba(224, 104, 48, 0.10);
+    --cap-3-bg: rgba(232, 155, 58, 0.10);
+    --cap-4-bg: rgba(61, 184, 160, 0.10);
+    --cap-5-bg: rgba(26, 168, 138, 0.12);
+    --bg: transparent;
+    --surface: #ffffff;
+    --text: #1a1a2e;
+    --text-muted: #6b7280;
+    --border: rgba(0,0,0,0.08);
   }
   * { margin: 0; padding: 0; box-sizing: border-box; }
   body {
@@ -47,11 +47,11 @@
   .card[data-cap="3"]::before { background: var(--cap-3-bg); }
   .card[data-cap="4"]::before { background: var(--cap-4-bg); }
   .card[data-cap="5"]::before { background: var(--cap-5-bg); }
-  .card[data-cap="1"] { border-color: rgba(212, 51, 74, 0.3); }
-  .card[data-cap="2"] { border-color: rgba(224, 104, 48, 0.3); }
-  .card[data-cap="3"] { border-color: rgba(232, 155, 58, 0.3); }
-  .card[data-cap="4"] { border-color: rgba(61, 184, 160, 0.3); }
-  .card[data-cap="5"] { border-color: rgba(26, 168, 138, 0.3); }
+  .card[data-cap="1"] { border-color: rgba(212, 51, 74, 0.25); }
+  .card[data-cap="2"] { border-color: rgba(224, 104, 48, 0.25); }
+  .card[data-cap="3"] { border-color: rgba(232, 155, 58, 0.25); }
+  .card[data-cap="4"] { border-color: rgba(61, 184, 160, 0.25); }
+  .card[data-cap="5"] { border-color: rgba(26, 168, 138, 0.25); }
   .card-header {
     display: flex; justify-content: space-between; align-items: flex-start;
     position: relative; z-index: 1;
@@ -66,8 +66,8 @@
   }
   .card[data-cap="1"] .cap-badge { background: var(--cap-1); color: #fff; }
   .card[data-cap="2"] .cap-badge { background: var(--cap-2); color: #fff; }
-  .card[data-cap="3"] .cap-badge { background: var(--cap-3); color: #1a1a2e; }
-  .card[data-cap="4"] .cap-badge { background: var(--cap-4); color: #1a1a2e; }
+  .card[data-cap="3"] .cap-badge { background: var(--cap-3); color: #fff; }
+  .card[data-cap="4"] .cap-badge { background: var(--cap-4); color: #fff; }
   .card[data-cap="5"] .cap-badge { background: var(--cap-5); color: #fff; }
   .focus-blocks {
     display: flex; flex-direction: column; gap: 4px; flex: 1;
@@ -87,7 +87,7 @@
   .tag {
     font-size: 8px; font-weight: 600; text-transform: uppercase;
     letter-spacing: 0.5px; padding: 2px 6px; border-radius: 4px;
-    background: rgba(255,255,255,0.07); color: var(--text-muted);
+    background: rgba(0,0,0,0.06); color: var(--text-muted);
   }
   .card.empty { opacity: 0.3; min-height: 120px; }
   .card.empty .day-name { color: var(--text-muted); }
