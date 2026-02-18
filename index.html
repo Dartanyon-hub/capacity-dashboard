@@ -6,97 +6,238 @@
 <title>Team Capacity — This Week & Next</title>
 <style>
   :root {
-    --cap-1: #d4334a;
-    --cap-2: #e06830;
-    --cap-3: #e89b3a;
-    --cap-4: #3db8a0;
-    --cap-5: #1aa88a;
+    /* Capacity colors: scarlet → orange → teal */
+    --cap-1: #d4334a;  /* At the Wall — scarlet */
+    --cap-2: #e06830;  /* Tight — burnt orange */
+    --cap-3: #e89b3a;  /* Steady — warm orange */
+    --cap-4: #3db8a0;  /* Room to Breathe — soft teal */
+    --cap-5: #1aa88a;  /* Wide Open — deep teal */
+
     --cap-1-bg: rgba(212, 51, 74, 0.12);
     --cap-2-bg: rgba(224, 104, 48, 0.10);
     --cap-3-bg: rgba(232, 155, 58, 0.10);
     --cap-4-bg: rgba(61, 184, 160, 0.10);
     --cap-5-bg: rgba(26, 168, 138, 0.12);
+
     --bg: transparent;
     --surface: #ffffff;
     --text: #1a1a2e;
     --text-muted: #6b7280;
     --border: rgba(0,0,0,0.08);
   }
+
   * { margin: 0; padding: 0; box-sizing: border-box; }
+
   body {
     font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-    background: var(--bg); color: var(--text); padding: 20px; min-width: 320px;
+    background: var(--bg);
+    color: var(--text);
+    padding: 20px;
+    min-width: 320px;
   }
-  .week-section { margin-bottom: 20px; }
+
+  .week-section {
+    margin-bottom: 20px;
+  }
+
   .week-label {
-    font-size: 11px; font-weight: 600; text-transform: uppercase;
-    letter-spacing: 1.5px; color: var(--text-muted); margin-bottom: 10px; padding-left: 2px;
+    font-size: 11px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    color: var(--text-muted);
+    margin-bottom: 10px;
+    padding-left: 2px;
   }
-  .week-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 8px; }
+
+  .week-grid {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 8px;
+  }
+
   .card {
-    background: var(--surface); border: 1px solid var(--border); border-radius: 10px;
-    padding: 12px; display: flex; flex-direction: column; gap: 8px;
-    min-height: 160px; position: relative; overflow: hidden;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 12px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    transition: background 0.15s ease;
+    min-height: 160px;
+    position: relative;
+    overflow: hidden;
   }
+
   .card::before {
-    content: ''; position: absolute; top: 0; left: 0; right: 0; bottom: 0;
-    border-radius: 10px; pointer-events: none;
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    border-radius: 10px;
+    pointer-events: none;
   }
+
   .card[data-cap="1"]::before { background: var(--cap-1-bg); }
   .card[data-cap="2"]::before { background: var(--cap-2-bg); }
   .card[data-cap="3"]::before { background: var(--cap-3-bg); }
   .card[data-cap="4"]::before { background: var(--cap-4-bg); }
   .card[data-cap="5"]::before { background: var(--cap-5-bg); }
+
   .card[data-cap="1"] { border-color: rgba(212, 51, 74, 0.25); }
   .card[data-cap="2"] { border-color: rgba(224, 104, 48, 0.25); }
   .card[data-cap="3"] { border-color: rgba(232, 155, 58, 0.25); }
   .card[data-cap="4"] { border-color: rgba(61, 184, 160, 0.25); }
   .card[data-cap="5"] { border-color: rgba(26, 168, 138, 0.25); }
+
   .card-header {
-    display: flex; justify-content: space-between; align-items: flex-start;
-    position: relative; z-index: 1;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    position: relative;
+    z-index: 1;
   }
-  .day-info { display: flex; flex-direction: column; }
-  .day-name { font-size: 13px; font-weight: 700; letter-spacing: 0.3px; }
-  .day-date { font-size: 10px; color: var(--text-muted); margin-top: 1px; }
+
+  .day-info {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .day-name {
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: 0.3px;
+  }
+
+  .day-date {
+    font-size: 10px;
+    color: var(--text-muted);
+    margin-top: 1px;
+  }
+
   .cap-badge {
-    font-size: 12px; font-weight: 800; width: 24px; height: 24px;
-    border-radius: 50%; display: flex; align-items: center; justify-content: center;
-    flex-shrink: 0; line-height: 1;
+    font-size: 12px;
+    font-weight: 800;
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    line-height: 1;
   }
+
   .card[data-cap="1"] .cap-badge { background: var(--cap-1); color: #fff; }
   .card[data-cap="2"] .cap-badge { background: var(--cap-2); color: #fff; }
   .card[data-cap="3"] .cap-badge { background: var(--cap-3); color: #fff; }
   .card[data-cap="4"] .cap-badge { background: var(--cap-4); color: #fff; }
   .card[data-cap="5"] .cap-badge { background: var(--cap-5); color: #fff; }
+
   .focus-blocks {
-    display: flex; flex-direction: column; gap: 4px; flex: 1;
-    position: relative; z-index: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    flex: 1;
+    position: relative;
+    z-index: 1;
   }
-  .focus-block { display: flex; align-items: flex-start; gap: 6px; }
+
+  .focus-block {
+    display: flex;
+    align-items: flex-start;
+    gap: 6px;
+  }
+
   .focus-label {
-    font-size: 8px; font-weight: 700; text-transform: uppercase;
-    letter-spacing: 0.5px; color: var(--text-muted); min-width: 18px;
-    padding-top: 1px; flex-shrink: 0;
+    font-size: 8px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    color: var(--text-muted);
+    min-width: 18px;
+    padding-top: 1px;
+    flex-shrink: 0;
   }
-  .focus-text { font-size: 11px; line-height: 1.35; color: var(--text); }
+
+  .focus-text {
+    font-size: 11px;
+    line-height: 1.35;
+    color: var(--text);
+  }
+
   .commitments {
-    display: flex; flex-wrap: wrap; gap: 3px; position: relative;
-    z-index: 1; margin-top: auto;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 3px;
+    position: relative;
+    z-index: 1;
+    margin-top: auto;
   }
+
   .tag {
-    font-size: 8px; font-weight: 600; text-transform: uppercase;
-    letter-spacing: 0.5px; padding: 2px 6px; border-radius: 4px;
-    background: rgba(0,0,0,0.06); color: var(--text-muted);
+    font-size: 8px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    padding: 2px 6px;
+    border-radius: 4px;
+    background: rgba(0,0,0,0.06);
+    color: var(--text-muted);
   }
-  .card.empty { opacity: 0.3; min-height: 120px; }
-  .card.empty .day-name { color: var(--text-muted); }
+
+  .card.empty {
+    opacity: 0.3;
+    min-height: 120px;
+  }
+
+  .card.empty .day-name {
+    color: var(--text-muted);
+  }
+
   .empty-label {
-    font-size: 10px; color: var(--text-muted); font-style: italic;
-    position: relative; z-index: 1;
+    font-size: 10px;
+    color: var(--text-muted);
+    font-style: italic;
+    position: relative;
+    z-index: 1;
   }
-  @media (max-width: 600px) { .week-grid { grid-template-columns: repeat(3, 1fr); } }
-  @media (max-width: 400px) { .week-grid { grid-template-columns: 1fr; } }
+
+  /* Dark mode: follows system/Notion theme */
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --cap-1-bg: rgba(212, 51, 74, 0.35);
+      --cap-2-bg: rgba(224, 104, 48, 0.30);
+      --cap-3-bg: rgba(232, 155, 58, 0.28);
+      --cap-4-bg: rgba(61, 184, 160, 0.28);
+      --cap-5-bg: rgba(26, 168, 138, 0.32);
+      --surface: #16213e;
+      --text: #e0e0e0;
+      --text-muted: #8892a4;
+      --border: rgba(255,255,255,0.06);
+    }
+    .card[data-cap="1"] { border-color: rgba(212, 51, 74, 0.3); }
+    .card[data-cap="2"] { border-color: rgba(224, 104, 48, 0.3); }
+    .card[data-cap="3"] { border-color: rgba(232, 155, 58, 0.3); }
+    .card[data-cap="4"] { border-color: rgba(61, 184, 160, 0.3); }
+    .card[data-cap="5"] { border-color: rgba(26, 168, 138, 0.3); }
+    .tag { background: rgba(255,255,255,0.07); }
+  }
+
+  /* Responsive: stack to 3+2 below 600px, single column below 400px */
+  @media (max-width: 600px) {
+    .week-grid {
+      grid-template-columns: repeat(3, 1fr);
+    }
+  }
+  @media (max-width: 400px) {
+    .week-grid {
+      grid-template-columns: 1fr;
+    }
+  }
 </style>
 </head>
 <body>
@@ -107,62 +248,123 @@
 
     <div class="card" data-cap="3">
       <div class="card-header">
-        <div class="day-info"><span class="day-name">Monday</span><span class="day-date">Feb 16</span></div>
+        <div class="day-info">
+          <span class="day-name">Monday</span>
+          <span class="day-date">Feb 16</span>
+        </div>
         <span class="cap-badge">3</span>
       </div>
       <div class="focus-blocks">
-        <div class="focus-block"><span class="focus-label">AM</span><span class="focus-text">Gravity Admin</span></div>
-        <div class="focus-block"><span class="focus-label">PM</span><span class="focus-text">Esports Admin</span></div>
+        <div class="focus-block">
+          <span class="focus-label">AM</span>
+          <span class="focus-text">Gravity Admin</span>
+        </div>
+        <div class="focus-block">
+          <span class="focus-label">PM</span>
+          <span class="focus-text">Esports Admin</span>
+        </div>
       </div>
-      <div class="commitments"><span class="tag">1:1</span><span class="tag">Focus Block</span></div>
+      <div class="commitments">
+        <span class="tag">1:1</span>
+        <span class="tag">Focus Block</span>
+      </div>
     </div>
 
     <div class="card" data-cap="4">
       <div class="card-header">
-        <div class="day-info"><span class="day-name">Tuesday</span><span class="day-date">Feb 17</span></div>
+        <div class="day-info">
+          <span class="day-name">Tuesday</span>
+          <span class="day-date">Feb 17</span>
+        </div>
         <span class="cap-badge">4</span>
       </div>
       <div class="focus-blocks">
-        <div class="focus-block"><span class="focus-label">AM</span><span class="focus-text">Content Retention</span></div>
-        <div class="focus-block"><span class="focus-label">PM</span><span class="focus-text">Meetings</span></div>
+        <div class="focus-block">
+          <span class="focus-label">AM</span>
+          <span class="focus-text">Content Retention</span>
+        </div>
+        <div class="focus-block">
+          <span class="focus-label">PM</span>
+          <span class="focus-text">Meetings</span>
+        </div>
       </div>
-      <div class="commitments"><span class="tag">1:1</span></div>
+      <div class="commitments">
+        <span class="tag">1:1</span>
+      </div>
     </div>
 
     <div class="card" data-cap="3">
       <div class="card-header">
-        <div class="day-info"><span class="day-name">Wednesday</span><span class="day-date">Feb 18</span></div>
+        <div class="day-info">
+          <span class="day-name">Wednesday</span>
+          <span class="day-date">Feb 18</span>
+        </div>
         <span class="cap-badge">3</span>
       </div>
       <div class="focus-blocks">
-        <div class="focus-block"><span class="focus-label">AM</span><span class="focus-text">Meetings</span></div>
-        <div class="focus-block"><span class="focus-label">PM</span><span class="focus-text">Content Retention</span></div>
+        <div class="focus-block">
+          <span class="focus-label">AM</span>
+          <span class="focus-text">Meetings</span>
+        </div>
+        <div class="focus-block">
+          <span class="focus-label">PM</span>
+          <span class="focus-text">Content Retention</span>
+        </div>
       </div>
-      <div class="commitments"><span class="tag">Team Sync</span><span class="tag">Standup</span><span class="tag">1:1</span></div>
+      <div class="commitments">
+        <span class="tag">Team Sync</span>
+        <span class="tag">Standup</span>
+        <span class="tag">1:1</span>
+      </div>
     </div>
 
     <div class="card" data-cap="3">
       <div class="card-header">
-        <div class="day-info"><span class="day-name">Thursday</span><span class="day-date">Feb 19</span></div>
+        <div class="day-info">
+          <span class="day-name">Thursday</span>
+          <span class="day-date">Feb 19</span>
+        </div>
         <span class="cap-badge">3</span>
       </div>
       <div class="focus-blocks">
-        <div class="focus-block"><span class="focus-label">AM</span><span class="focus-text">Meetings</span></div>
-        <div class="focus-block"><span class="focus-label">PM</span><span class="focus-text">MC Tech Proficiency</span></div>
+        <div class="focus-block">
+          <span class="focus-label">AM</span>
+          <span class="focus-text">Meetings</span>
+        </div>
+        <div class="focus-block">
+          <span class="focus-label">PM</span>
+          <span class="focus-text">MC Tech Proficiency</span>
+        </div>
       </div>
-      <div class="commitments"><span class="tag">Show Planning</span><span class="tag">1:1</span><span class="tag">Team Sync</span></div>
+      <div class="commitments">
+        <span class="tag">Show Planning</span>
+        <span class="tag">1:1</span>
+        <span class="tag">Team Sync</span>
+      </div>
     </div>
 
     <div class="card" data-cap="2">
       <div class="card-header">
-        <div class="day-info"><span class="day-name">Friday</span><span class="day-date">Feb 20</span></div>
+        <div class="day-info">
+          <span class="day-name">Friday</span>
+          <span class="day-date">Feb 20</span>
+        </div>
         <span class="cap-badge">2</span>
       </div>
       <div class="focus-blocks">
-        <div class="focus-block"><span class="focus-label">AM</span><span class="focus-text">Meetings</span></div>
-        <div class="focus-block"><span class="focus-label">PM</span><span class="focus-text">Innovation Block</span></div>
+        <div class="focus-block">
+          <span class="focus-label">AM</span>
+          <span class="focus-text">Meetings</span>
+        </div>
+        <div class="focus-block">
+          <span class="focus-label">PM</span>
+          <span class="focus-text">Innovation Block</span>
+        </div>
       </div>
-      <div class="commitments"><span class="tag">1:1</span><span class="tag">Show Planning</span></div>
+      <div class="commitments">
+        <span class="tag">1:1</span>
+        <span class="tag">Show Planning</span>
+      </div>
     </div>
 
   </div>
@@ -174,61 +376,117 @@
 
     <div class="card" data-cap="1">
       <div class="card-header">
-        <div class="day-info"><span class="day-name">Monday</span><span class="day-date">Feb 23</span></div>
+        <div class="day-info">
+          <span class="day-name">Monday</span>
+          <span class="day-date">Feb 23</span>
+        </div>
         <span class="cap-badge">1</span>
       </div>
       <div class="focus-blocks">
-        <div class="focus-block"><span class="focus-label">AM</span><span class="focus-text">OFF</span></div>
-        <div class="focus-block"><span class="focus-label">PM</span><span class="focus-text">OFF</span></div>
+        <div class="focus-block">
+          <span class="focus-label">AM</span>
+          <span class="focus-text">OFF</span>
+        </div>
+        <div class="focus-block">
+          <span class="focus-label">PM</span>
+          <span class="focus-text">OFF</span>
+        </div>
       </div>
-      <div class="commitments"><span class="tag">1:1</span></div>
+      <div class="commitments">
+        <span class="tag">1:1</span>
+      </div>
     </div>
 
     <div class="card" data-cap="1">
       <div class="card-header">
-        <div class="day-info"><span class="day-name">Tuesday</span><span class="day-date">Feb 24</span></div>
+        <div class="day-info">
+          <span class="day-name">Tuesday</span>
+          <span class="day-date">Feb 24</span>
+        </div>
         <span class="cap-badge">1</span>
       </div>
       <div class="focus-blocks">
-        <div class="focus-block"><span class="focus-label">AM</span><span class="focus-text">OFF</span></div>
-        <div class="focus-block"><span class="focus-label">PM</span><span class="focus-text">OFF</span></div>
+        <div class="focus-block">
+          <span class="focus-label">AM</span>
+          <span class="focus-text">OFF</span>
+        </div>
+        <div class="focus-block">
+          <span class="focus-label">PM</span>
+          <span class="focus-text">OFF</span>
+        </div>
       </div>
     </div>
 
     <div class="card" data-cap="1">
       <div class="card-header">
-        <div class="day-info"><span class="day-name">Wednesday</span><span class="day-date">Feb 25</span></div>
+        <div class="day-info">
+          <span class="day-name">Wednesday</span>
+          <span class="day-date">Feb 25</span>
+        </div>
         <span class="cap-badge">1</span>
       </div>
       <div class="focus-blocks">
-        <div class="focus-block"><span class="focus-label">AM</span><span class="focus-text">SHOW</span></div>
-        <div class="focus-block"><span class="focus-label">PM</span><span class="focus-text">SHOW</span></div>
+        <div class="focus-block">
+          <span class="focus-label">AM</span>
+          <span class="focus-text">SHOW</span>
+        </div>
+        <div class="focus-block">
+          <span class="focus-label">PM</span>
+          <span class="focus-text">SHOW</span>
+        </div>
       </div>
-      <div class="commitments"><span class="tag">All Hands</span><span class="tag">Standup</span></div>
+      <div class="commitments">
+        <span class="tag">All Hands</span>
+        <span class="tag">Standup</span>
+      </div>
     </div>
 
     <div class="card" data-cap="3">
       <div class="card-header">
-        <div class="day-info"><span class="day-name">Thursday</span><span class="day-date">Feb 26</span></div>
+        <div class="day-info">
+          <span class="day-name">Thursday</span>
+          <span class="day-date">Feb 26</span>
+        </div>
         <span class="cap-badge">3</span>
       </div>
       <div class="focus-blocks">
-        <div class="focus-block"><span class="focus-label">AM</span><span class="focus-text">Meetings</span></div>
-        <div class="focus-block"><span class="focus-label">PM</span><span class="focus-text">Content Retention</span></div>
+        <div class="focus-block">
+          <span class="focus-label">AM</span>
+          <span class="focus-text">Meetings</span>
+        </div>
+        <div class="focus-block">
+          <span class="focus-label">PM</span>
+          <span class="focus-text">Content Retention</span>
+        </div>
       </div>
-      <div class="commitments"><span class="tag">All Hands</span><span class="tag">1:1</span><span class="tag">Standup</span></div>
+      <div class="commitments">
+        <span class="tag">All Hands</span>
+        <span class="tag">1:1</span>
+        <span class="tag">Standup</span>
+      </div>
     </div>
 
     <div class="card" data-cap="5">
       <div class="card-header">
-        <div class="day-info"><span class="day-name">Friday</span><span class="day-date">Feb 27</span></div>
+        <div class="day-info">
+          <span class="day-name">Friday</span>
+          <span class="day-date">Feb 27</span>
+        </div>
         <span class="cap-badge">5</span>
       </div>
       <div class="focus-blocks">
-        <div class="focus-block"><span class="focus-label">AM</span><span class="focus-text">MC Tech Proficiency</span></div>
-        <div class="focus-block"><span class="focus-label">PM</span><span class="focus-text">Innovation Block</span></div>
+        <div class="focus-block">
+          <span class="focus-label">AM</span>
+          <span class="focus-text">MC Tech Proficiency</span>
+        </div>
+        <div class="focus-block">
+          <span class="focus-label">PM</span>
+          <span class="focus-text">Innovation Block</span>
+        </div>
       </div>
-      <div class="commitments"><span class="tag">1:1</span></div>
+      <div class="commitments">
+        <span class="tag">1:1</span>
+      </div>
     </div>
 
   </div>
