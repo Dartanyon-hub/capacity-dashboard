@@ -199,8 +199,9 @@
     letter-spacing: 0.3px;
   }
 
+  /* Dark mode via system preference */
   @media (prefers-color-scheme: dark) {
-    :root {
+    :root:not([data-theme="light"]) {
       --cap-1-bg: rgba(212, 51, 74, 0.35);
       --cap-2-bg: rgba(224, 104, 48, 0.30);
       --cap-3-bg: rgba(232, 155, 58, 0.28);
@@ -211,13 +212,32 @@
       --text-muted: #8892a4;
       --border: rgba(255,255,255,0.06);
     }
-    .card[data-cap="1"] { border-color: rgba(212, 51, 74, 0.3); }
-    .card[data-cap="2"] { border-color: rgba(224, 104, 48, 0.3); }
-    .card[data-cap="3"] { border-color: rgba(232, 155, 58, 0.3); }
-    .card[data-cap="4"] { border-color: rgba(61, 184, 160, 0.3); }
-    .card[data-cap="5"] { border-color: rgba(26, 168, 138, 0.3); }
-    .tag { background: rgba(255,255,255,0.07); }
+    :root:not([data-theme="light"]) .card[data-cap="1"] { border-color: rgba(212, 51, 74, 0.3); }
+    :root:not([data-theme="light"]) .card[data-cap="2"] { border-color: rgba(224, 104, 48, 0.3); }
+    :root:not([data-theme="light"]) .card[data-cap="3"] { border-color: rgba(232, 155, 58, 0.3); }
+    :root:not([data-theme="light"]) .card[data-cap="4"] { border-color: rgba(61, 184, 160, 0.3); }
+    :root:not([data-theme="light"]) .card[data-cap="5"] { border-color: rgba(26, 168, 138, 0.3); }
+    :root:not([data-theme="light"]) .tag { background: rgba(255,255,255,0.07); }
   }
+
+  /* Force dark via URL param ?theme=dark */
+  :root[data-theme="dark"] {
+    --cap-1-bg: rgba(212, 51, 74, 0.35);
+    --cap-2-bg: rgba(224, 104, 48, 0.30);
+    --cap-3-bg: rgba(232, 155, 58, 0.28);
+    --cap-4-bg: rgba(61, 184, 160, 0.28);
+    --cap-5-bg: rgba(26, 168, 138, 0.32);
+    --surface: #16213e;
+    --text: #e0e0e0;
+    --text-muted: #8892a4;
+    --border: rgba(255,255,255,0.06);
+  }
+  :root[data-theme="dark"] .card[data-cap="1"] { border-color: rgba(212, 51, 74, 0.3); }
+  :root[data-theme="dark"] .card[data-cap="2"] { border-color: rgba(224, 104, 48, 0.3); }
+  :root[data-theme="dark"] .card[data-cap="3"] { border-color: rgba(232, 155, 58, 0.3); }
+  :root[data-theme="dark"] .card[data-cap="4"] { border-color: rgba(61, 184, 160, 0.3); }
+  :root[data-theme="dark"] .card[data-cap="5"] { border-color: rgba(26, 168, 138, 0.3); }
+  :root[data-theme="dark"] .tag { background: rgba(255,255,255,0.07); }
 
   @media (max-width: 600px) {
     .week-grid { grid-template-columns: repeat(3, 1fr); }
@@ -240,20 +260,100 @@
 <script>
 // ── DATA BLOCK ─────────────────────────────────────────────
 // Nexus replaces this entire block each refresh cycle.
-// 10 entries: 2 weeks × 5 weekdays. cap = 1-5 or null.
+// 10 entries: 2 weeks x 5 weekdays. cap = 1-5 or null.
 const CAPACITY_DATA = [
-  {"day":"Monday","date":"2026-03-16","am":"","pm":"","commitments":[],"cap":null},
-  {"day":"Tuesday","date":"2026-03-17","am":"","pm":"","commitments":[],"cap":null},
-  {"day":"Wednesday","date":"2026-03-18","am":"","pm":"","commitments":[],"cap":null},
-  {"day":"Thursday","date":"2026-03-19","am":"","pm":"","commitments":[],"cap":null},
-  {"day":"Friday","date":"2026-03-20","am":"","pm":"","commitments":[],"cap":null},
-  {"day":"Monday","date":"2026-03-23","am":"","pm":"","commitments":[],"cap":null},
-  {"day":"Tuesday","date":"2026-03-24","am":"","pm":"","commitments":[],"cap":null},
-  {"day":"Wednesday","date":"2026-03-25","am":"","pm":"","commitments":[],"cap":null},
-  {"day":"Thursday","date":"2026-03-26","am":"","pm":"","commitments":[],"cap":null},
-  {"day":"Friday","date":"2026-03-27","am":"","pm":"","commitments":[],"cap":null}
+  {
+    "day": "Monday",
+    "date": "2026-03-16",
+    "am": "Gravity Admin",
+    "pm": "Gravity Admin",
+    "commitments": [
+      "1:1"
+    ],
+    "cap": 4
+  },
+  {
+    "day": "Tuesday",
+    "date": "2026-03-17",
+    "am": "Gravity Admin",
+    "pm": "Gravity Admin",
+    "commitments": [
+      "1:1"
+    ],
+    "cap": 2
+  },
+  {
+    "day": "Wednesday",
+    "date": "2026-03-18",
+    "am": "Esports Admin",
+    "pm": "MC Technical Proficiency",
+    "commitments": [
+      "Team Sync"
+    ],
+    "cap": null
+  },
+  {
+    "day": "Thursday",
+    "date": "2026-03-19",
+    "am": "Gravity Admin",
+    "pm": "Meetings",
+    "commitments": [
+      "Standup",
+      "1:1",
+      "Team Sync"
+    ],
+    "cap": 1
+  },
+  {
+    "day": "Friday",
+    "date": "2026-03-20",
+    "am": "OFF",
+    "pm": "OFF",
+    "commitments": [],
+    "cap": null
+  },
+  {
+    "day": "Monday",
+    "date": "2026-03-23",
+    "am": "",
+    "pm": "",
+    "commitments": [],
+    "cap": null
+  },
+  {
+    "day": "Tuesday",
+    "date": "2026-03-24",
+    "am": "",
+    "pm": "",
+    "commitments": [],
+    "cap": null
+  },
+  {
+    "day": "Wednesday",
+    "date": "2026-03-25",
+    "am": "",
+    "pm": "",
+    "commitments": [],
+    "cap": null
+  },
+  {
+    "day": "Thursday",
+    "date": "2026-03-26",
+    "am": "",
+    "pm": "",
+    "commitments": [],
+    "cap": null
+  },
+  {
+    "day": "Friday",
+    "date": "2026-03-27",
+    "am": "",
+    "pm": "",
+    "commitments": [],
+    "cap": null
+  }
 ];
-const GENERATED_AT = "Awaiting first refresh";
+const GENERATED_AT = "Mar 13, 2026 at 11:17 AM CT";
 // ── END DATA BLOCK ─────────────────────────────────────────
 
 function formatDate(iso) {
@@ -296,6 +396,18 @@ function card(d) {
   h += '</div>';
   return h;
 }
+
+// ── Theme: respect URL param, then system pref, default light ──
+(function applyTheme() {
+  var params = new URLSearchParams(window.location.search);
+  var forced = params.get('theme');
+  if (forced === 'dark') {
+    document.documentElement.setAttribute('data-theme', 'dark');
+  } else if (forced === 'light') {
+    document.documentElement.setAttribute('data-theme', 'light');
+  }
+  // If no param, CSS media query handles it naturally
+})();
 
 (function render() {
   var w1 = CAPACITY_DATA.slice(0, 5);
