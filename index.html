@@ -262,18 +262,115 @@
 // Nexus replaces this entire block each refresh cycle.
 // 10 entries: 2 weeks x 5 weekdays. cap = 1-5 or null.
 const CAPACITY_DATA = [
-  {"day":"Monday","date":"2026-04-13","am":"Esports Admin","pm":"Gravity Admin","commitments":["1:1"],"cap":5},
-  {"day":"Tuesday","date":"2026-04-14","am":"CRO - Creative Services","pm":"SRRequest testing","commitments":["1:1"],"cap":4},
-  {"day":"Wednesday","date":"2026-04-15","am":"NotebookLM training VCT","pm":"","commitments":["Team Sync"],"cap":4},
-  {"day":"Thursday","date":"2026-04-16","am":"AI Focus","pm":"Meetings","commitments":["Standup","1:1","Team Sync","Retro","All Hands"],"cap":2},
-  {"day":"Friday","date":"2026-04-17","am":"","pm":"Week Prep","commitments":[],"cap":5},
-  {"day":"Monday","date":"2026-04-20","am":"Esports Admin","pm":"Gravity Admin","commitments":["1:1","Team Sync","Show Planning"],"cap":3},
-  {"day":"Tuesday","date":"2026-04-21","am":"OOS Request Database","pm":"CRO","commitments":["1:1","Team Sync"],"cap":4},
-  {"day":"Wednesday","date":"2026-04-22","am":"MC Proficiency","pm":"Focus Time","commitments":["Team Sync"],"cap":4},
-  {"day":"Thursday","date":"2026-04-23","am":"VCT Start","pm":"MC Proficiency","commitments":["Standup","1:1","Team Sync"],"cap":2},
-  {"day":"Friday","date":"2026-04-24","am":"GCO Admin","pm":"Week Prep","commitments":["1:1"],"cap":3}
+  {
+    "day": "Monday",
+    "date": "2026-04-27",
+    "am": "LATAM Syncs",
+    "pm": "Esports Admin",
+    "commitments": [
+      "1:1"
+    ],
+    "cap": 5
+  },
+  {
+    "day": "Tuesday",
+    "date": "2026-04-28",
+    "am": "Gravity Admin",
+    "pm": "SRRequest testing",
+    "commitments": [
+      "1:1"
+    ],
+    "cap": 4
+  },
+  {
+    "day": "Wednesday",
+    "date": "2026-04-29",
+    "am": "Project Management Dive",
+    "pm": "",
+    "commitments": [
+      "Team Sync"
+    ],
+    "cap": 4
+  },
+  {
+    "day": "Thursday",
+    "date": "2026-04-30",
+    "am": "AI Focus",
+    "pm": "Meetings",
+    "commitments": [
+      "Standup",
+      "1:1",
+      "Team Sync",
+      "Retro",
+      "All Hands"
+    ],
+    "cap": 2
+  },
+  {
+    "day": "Friday",
+    "date": "2026-05-01",
+    "am": "",
+    "pm": "Week Prep",
+    "commitments": [],
+    "cap": 5
+  },
+  {
+    "day": "Monday",
+    "date": "2026-05-04",
+    "am": "Esports Admin",
+    "pm": "Gravity Admin",
+    "commitments": [
+      "1:1",
+      "Team Sync",
+      "Show Planning"
+    ],
+    "cap": 3
+  },
+  {
+    "day": "Tuesday",
+    "date": "2026-05-05",
+    "am": "OOS Request Database",
+    "pm": "CRO",
+    "commitments": [
+      "1:1",
+      "Team Sync"
+    ],
+    "cap": 4
+  },
+  {
+    "day": "Wednesday",
+    "date": "2026-05-06",
+    "am": "MC Proficiency",
+    "pm": "Focus Time",
+    "commitments": [
+      "Team Sync"
+    ],
+    "cap": 4
+  },
+  {
+    "day": "Thursday",
+    "date": "2026-05-07",
+    "am": "",
+    "pm": "MC Proficiency Sync",
+    "commitments": [
+      "Standup",
+      "1:1",
+      "Team Sync"
+    ],
+    "cap": 2
+  },
+  {
+    "day": "Friday",
+    "date": "2026-05-08",
+    "am": "GCO Admin",
+    "pm": "Week Prep",
+    "commitments": [
+      "1:1"
+    ],
+    "cap": 3
+  }
 ];
-const GENERATED_AT = "Apr 14, 2026 at 08:30 AM PDT";
+const GENERATED_AT = "Apr 27, 2026 at 3:17 PM PDT";
 // ── END DATA BLOCK ─────────────────────────────────────────
 
 function formatDate(iso) {
@@ -304,8 +401,8 @@ function card(d) {
     h += '<span class="empty-label">Not yet planned</span>';
   } else {
     h += '<div class="focus-blocks">';
-    h += '<div class="focus-block"><span class="focus-label">AM</span><span class="focus-text">' + (d.am || '\u2014') + '</span></div>';
-    h += '<div class="focus-block"><span class="focus-label">PM</span><span class="focus-text">' + (d.pm || '\u2014') + '</span></div>';
+    h += '<div class="focus-block"><span class="focus-label">AM</span><span class="focus-text">' + (d.am || '—') + '</span></div>';
+    h += '<div class="focus-block"><span class="focus-label">PM</span><span class="focus-text">' + (d.pm || '—') + '</span></div>';
     h += '</div>';
     if (d.commitments && d.commitments.length) {
       h += '<div class="commitments">';
@@ -335,13 +432,13 @@ function card(d) {
   var o = '';
 
   o += '<div class="week-section">';
-  o += '<div class="week-label">This Week \u2014 ' + weekRange(w1[0].date, w1[4].date) + '</div>';
+  o += '<div class="week-label">This Week — ' + weekRange(w1[0].date, w1[4].date) + '</div>';
   o += '<div class="week-grid">';
   w1.forEach(function(d) { o += card(d); });
   o += '</div></div>';
 
   o += '<div class="week-section">';
-  o += '<div class="week-label">Next Week \u2014 ' + weekRange(w2[0].date, w2[4].date) + '</div>';
+  o += '<div class="week-label">Next Week — ' + weekRange(w2[0].date, w2[4].date) + '</div>';
   o += '<div class="week-grid">';
   w2.forEach(function(d) { o += card(d); });
   o += '</div></div>';
