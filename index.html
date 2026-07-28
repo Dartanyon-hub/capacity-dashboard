@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Team Capacity — This Week & Next</title>
+<title>Team Capacity — This Week &amp; Next</title>
 <style>
   :root {
     --cap-1: #d4334a;
@@ -23,19 +23,21 @@
     --text: #1a1a2e;
     --text-muted: #6b7280;
     --border: rgba(0,0,0,0.08);
+    --ring: rgba(26,26,46,0.55);
   }
 
   * { margin: 0; padding: 0; box-sizing: border-box; }
 
+  html, body { background: var(--bg); }
+
   body {
     font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-    background: var(--bg);
     color: var(--text);
-    padding: 20px;
-    min-width: 320px;
+    padding: 16px;
+    min-width: 280px;
   }
 
-  .week-section { margin-bottom: 20px; }
+  .week-section { margin-bottom: 18px; }
 
   .week-label {
     font-size: 11px;
@@ -61,7 +63,6 @@
     display: flex;
     flex-direction: column;
     gap: 8px;
-    transition: background 0.15s ease;
     min-height: 160px;
     position: relative;
     overflow: hidden;
@@ -86,6 +87,8 @@
   .card[data-cap="3"] { border-color: rgba(232, 155, 58, 0.25); }
   .card[data-cap="4"] { border-color: rgba(61, 184, 160, 0.25); }
   .card[data-cap="5"] { border-color: rgba(26, 168, 138, 0.25); }
+
+  .card.today { box-shadow: 0 0 0 2px var(--ring); }
 
   .card-header {
     display: flex;
@@ -154,6 +157,7 @@
     font-size: 11px;
     line-height: 1.35;
     color: var(--text);
+    word-break: break-word;
   }
 
   .commitments {
@@ -176,11 +180,7 @@
     color: var(--text-muted);
   }
 
-  .card.empty {
-    opacity: 0.3;
-    min-height: 120px;
-  }
-
+  .card.empty { opacity: 0.3; min-height: 120px; }
   .card.empty .day-name { color: var(--text-muted); }
 
   .empty-label {
@@ -199,6 +199,49 @@
     letter-spacing: 0.3px;
   }
 
+  .notice {
+    font-size: 12px;
+    line-height: 1.5;
+    color: var(--text-muted);
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 16px;
+  }
+  .notice strong { color: var(--text); display: block; margin-bottom: 4px; font-size: 13px; }
+  .notice code {
+    font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+    font-size: 11px;
+    background: rgba(0,0,0,0.06);
+    padding: 1px 4px;
+    border-radius: 3px;
+  }
+
+  /* ── Notion embeds are fixed-height iframes. Compact as height shrinks. ── */
+  @media (max-height: 620px) {
+    body { padding: 12px; }
+    .card { min-height: 132px; }
+    .week-section { margin-bottom: 14px; }
+  }
+  @media (max-height: 520px) {
+    body { padding: 10px; }
+    .card { min-height: 108px; padding: 9px; gap: 6px; }
+    .card.empty { min-height: 88px; }
+    .week-label { margin-bottom: 7px; font-size: 10px; }
+    .week-section { margin-bottom: 11px; }
+    .focus-text { font-size: 10px; }
+    .cap-badge { width: 20px; height: 20px; font-size: 11px; }
+  }
+  @media (max-height: 420px) {
+    .card { min-height: 92px; padding: 8px; }
+    .day-name { font-size: 12px; }
+    .commitments { display: none; }
+    .generated-at { display: none; }
+  }
+
+  @media (max-width: 600px) { .week-grid { grid-template-columns: repeat(3, 1fr); } }
+  @media (max-width: 400px) { .week-grid { grid-template-columns: 1fr; } }
+
   /* Dark mode via system preference */
   @media (prefers-color-scheme: dark) {
     :root:not([data-theme="light"]) {
@@ -211,6 +254,7 @@
       --text: #e0e0e0;
       --text-muted: #8892a4;
       --border: rgba(255,255,255,0.06);
+      --ring: rgba(224,224,224,0.5);
     }
     :root:not([data-theme="light"]) .card[data-cap="1"] { border-color: rgba(212, 51, 74, 0.3); }
     :root:not([data-theme="light"]) .card[data-cap="2"] { border-color: rgba(224, 104, 48, 0.3); }
@@ -218,6 +262,7 @@
     :root:not([data-theme="light"]) .card[data-cap="4"] { border-color: rgba(61, 184, 160, 0.3); }
     :root:not([data-theme="light"]) .card[data-cap="5"] { border-color: rgba(26, 168, 138, 0.3); }
     :root:not([data-theme="light"]) .tag { background: rgba(255,255,255,0.07); }
+    :root:not([data-theme="light"]) .notice code { background: rgba(255,255,255,0.09); }
   }
 
   /* Force dark via URL param ?theme=dark */
@@ -231,6 +276,7 @@
     --text: #e0e0e0;
     --text-muted: #8892a4;
     --border: rgba(255,255,255,0.06);
+    --ring: rgba(224,224,224,0.5);
   }
   :root[data-theme="dark"] .card[data-cap="1"] { border-color: rgba(212, 51, 74, 0.3); }
   :root[data-theme="dark"] .card[data-cap="2"] { border-color: rgba(224, 104, 48, 0.3); }
@@ -238,65 +284,56 @@
   :root[data-theme="dark"] .card[data-cap="4"] { border-color: rgba(61, 184, 160, 0.3); }
   :root[data-theme="dark"] .card[data-cap="5"] { border-color: rgba(26, 168, 138, 0.3); }
   :root[data-theme="dark"] .tag { background: rgba(255,255,255,0.07); }
-
-  @media (max-width: 600px) {
-    .week-grid { grid-template-columns: repeat(3, 1fr); }
-  }
-  @media (max-width: 400px) {
-    .week-grid { grid-template-columns: 1fr; }
-  }
+  :root[data-theme="dark"] .notice code { background: rgba(255,255,255,0.09); }
 </style>
 </head>
 <body>
 
 <!--
-  CAPACITY DASHBOARD — Data-driven static page
-  Generated by Nexus scheduled task from Craft "Weekly Capacity" collection.
-  Collection ID: 738dcea8-2583-add2-5863-d7f5f5b640e6
+  CAPACITY DASHBOARD — static page, no build step.
+  Data lives in data.json next to this file. Edit it with admin.html,
+  then commit the updated data.json. This page fetches it at load time.
+
   Repo: https://github.com/Dartanyon-hub/capacity-dashboard
   Live: https://dartanyon-hub.github.io/capacity-dashboard/
 -->
 
 <script>
-// ── DATA BLOCK ─────────────────────────────────────────────
-// Nexus replaces this entire block each refresh cycle.
-// 10 entries: 2 weeks x 5 weekdays. cap = 1-5 or null.
-const CAPACITY_DATA = [
-  {"day":"Monday","date":"2026-07-27","am":"Esports Admin","pm":"Show","commitments":["1:1","Team Sync","Show Planning"],"cap":3},
-  {"day":"Tuesday","date":"2026-07-28","am":"Gravity Admin","pm":"VCT Challengers","commitments":["1:1","Team Sync"],"cap":2},
-  {"day":"Wednesday","date":"2026-07-29","am":"Meetings","pm":"VCT Challengers","commitments":["Team Sync"],"cap":3},
-  {"day":"Thursday","date":"2026-07-30","am":"Gravity Admin","pm":"Interviews","commitments":["Standup","1:1","Team Sync"],"cap":2},
-  {"day":"Friday","date":"2026-07-31","am":"LCK / LCP WM","pm":"","commitments":["1:1","Team Sync"],"cap":3},
-  {"day":"Monday","date":"2026-08-03","am":"Esports Admin","pm":"Gravity Admin","commitments":["1:1","Show Planning","Focus Block"],"cap":3},
-  {"day":"Tuesday","date":"2026-08-04","am":"Esports Admin","pm":"Chili","commitments":["1:1"],"cap":4},
-  {"day":"Wednesday","date":"2026-08-05","am":"Training","pm":"Training","commitments":["Team Sync"],"cap":2},
-  {"day":"Thursday","date":"2026-08-06","am":"LCP WM","pm":"TAMS / Chili","commitments":["Standup","1:1","Team Sync","Retro","All Hands"],"cap":4},
-  {"day":"Friday","date":"2026-08-07","am":"Off","pm":"Off","commitments":[],"cap":null}
-];
-const GENERATED_AT = "Jul 28, 2026 at 09:22 AM PDT";
-// ── END DATA BLOCK ─────────────────────────────────────────
+var MONTHS = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+
+function esc(s) {
+  return String(s == null ? '' : s)
+    .replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;').replace(/'/g, '&#39;');
+}
 
 function formatDate(iso) {
-  const d = new Date(iso + 'T12:00:00');
-  const m = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
-  return m[d.getMonth()] + ' ' + d.getDate();
+  var d = new Date(iso + 'T12:00:00');
+  return MONTHS[d.getMonth()] + ' ' + d.getDate();
 }
 
 function weekRange(start, end) {
-  const s = new Date(start + 'T12:00:00');
-  const e = new Date(end + 'T12:00:00');
-  const m = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
-  if (s.getMonth() === e.getMonth()) return m[s.getMonth()] + ' ' + s.getDate() + ' – ' + e.getDate();
-  return m[s.getMonth()] + ' ' + s.getDate() + ' – ' + m[e.getMonth()] + ' ' + e.getDate();
+  var s = new Date(start + 'T12:00:00');
+  var e = new Date(end + 'T12:00:00');
+  if (s.getMonth() === e.getMonth()) return MONTHS[s.getMonth()] + ' ' + s.getDate() + ' – ' + e.getDate();
+  return MONTHS[s.getMonth()] + ' ' + s.getDate() + ' – ' + MONTHS[e.getMonth()] + ' ' + e.getDate();
 }
 
-function card(d) {
-  const cap = d.cap || 0;
-  const empty = !d.am && !d.pm && !cap;
-  let h = '<div class="' + (empty ? 'card empty' : 'card') + '"' + (cap ? ' data-cap="' + cap + '"' : '') + '>';
+function todayISO() {
+  var d = new Date();
+  return d.getFullYear() + '-' +
+    String(d.getMonth() + 1).padStart(2, '0') + '-' +
+    String(d.getDate()).padStart(2, '0');
+}
+
+function card(d, today) {
+  var cap = d.cap || 0;
+  var empty = !d.am && !d.pm && !cap;
+  var cls = 'card' + (empty ? ' empty' : '') + (d.date === today ? ' today' : '');
+  var h = '<div class="' + cls + '"' + (cap ? ' data-cap="' + cap + '"' : '') + '>';
   h += '<div class="card-header"><div class="day-info">';
-  h += '<span class="day-name">' + d.day + '</span>';
-  h += '<span class="day-date">' + formatDate(d.date) + '</span>';
+  h += '<span class="day-name">' + esc(d.day) + '</span>';
+  h += '<span class="day-date">' + esc(formatDate(d.date)) + '</span>';
   h += '</div>';
   if (cap) h += '<span class="cap-badge">' + cap + '</span>';
   h += '</div>';
@@ -304,12 +341,12 @@ function card(d) {
     h += '<span class="empty-label">Not yet planned</span>';
   } else {
     h += '<div class="focus-blocks">';
-    h += '<div class="focus-block"><span class="focus-label">AM</span><span class="focus-text">' + (d.am || '—') + '</span></div>';
-    h += '<div class="focus-block"><span class="focus-label">PM</span><span class="focus-text">' + (d.pm || '—') + '</span></div>';
+    h += '<div class="focus-block"><span class="focus-label">AM</span><span class="focus-text">' + (d.am ? esc(d.am) : '—') + '</span></div>';
+    h += '<div class="focus-block"><span class="focus-label">PM</span><span class="focus-text">' + (d.pm ? esc(d.pm) : '—') + '</span></div>';
     h += '</div>';
     if (d.commitments && d.commitments.length) {
       h += '<div class="commitments">';
-      d.commitments.forEach(function(c) { h += '<span class="tag">' + c + '</span>'; });
+      d.commitments.forEach(function (c) { h += '<span class="tag">' + esc(c) + '</span>'; });
       h += '</div>';
     }
   }
@@ -317,38 +354,75 @@ function card(d) {
   return h;
 }
 
-// ── Theme: respect URL param, then system pref, default light ──
-(function applyTheme() {
-  var params = new URLSearchParams(window.location.search);
-  var forced = params.get('theme');
-  if (forced === 'dark') {
-    document.documentElement.setAttribute('data-theme', 'dark');
-  } else if (forced === 'light') {
-    document.documentElement.setAttribute('data-theme', 'light');
-  }
-  // If no param, CSS media query handles it naturally
-})();
-
-(function render() {
-  var w1 = CAPACITY_DATA.slice(0, 5);
-  var w2 = CAPACITY_DATA.slice(5, 10);
+function renderDashboard(days, generatedAt) {
+  var today = todayISO();
+  var w1 = days.slice(0, 5);
+  var w2 = days.slice(5, 10);
   var o = '';
 
-  o += '<div class="week-section">';
-  o += '<div class="week-label">This Week — ' + weekRange(w1[0].date, w1[4].date) + '</div>';
-  o += '<div class="week-grid">';
-  w1.forEach(function(d) { o += card(d); });
-  o += '</div></div>';
+  if (w1.length) {
+    o += '<div class="week-section">';
+    o += '<div class="week-label">This Week — ' + esc(weekRange(w1[0].date, w1[w1.length - 1].date)) + '</div>';
+    o += '<div class="week-grid">';
+    w1.forEach(function (d) { o += card(d, today); });
+    o += '</div></div>';
+  }
 
-  o += '<div class="week-section">';
-  o += '<div class="week-label">Next Week — ' + weekRange(w2[0].date, w2[4].date) + '</div>';
-  o += '<div class="week-grid">';
-  w2.forEach(function(d) { o += card(d); });
-  o += '</div></div>';
+  if (w2.length) {
+    o += '<div class="week-section">';
+    o += '<div class="week-label">Next Week — ' + esc(weekRange(w2[0].date, w2[w2.length - 1].date)) + '</div>';
+    o += '<div class="week-grid">';
+    w2.forEach(function (d) { o += card(d, today); });
+    o += '</div></div>';
+  }
 
-  o += '<div class="generated-at">Last updated: ' + GENERATED_AT + '</div>';
+  if (generatedAt) o += '<div class="generated-at">Last updated: ' + esc(generatedAt) + '</div>';
+  return o;
+}
 
-  document.body.innerHTML = o;
+// ── Theme: URL param overrides system preference ──
+(function applyTheme() {
+  var forced = new URLSearchParams(window.location.search).get('theme');
+  if (forced === 'dark' || forced === 'light') {
+    document.documentElement.setAttribute('data-theme', forced);
+  }
+})();
+
+// ── Preview channel ──
+// admin.html embeds this page and pushes in-progress edits so the
+// preview is the real renderer, not a copy that can drift. Values are
+// escaped in card(), and this only ever affects the current viewer.
+var previewMode = false;
+window.addEventListener('message', function (ev) {
+  var msg = ev.data;
+  if (!msg || msg.type !== 'capacity-preview' || !msg.payload) return;
+  previewMode = true;
+  document.body.innerHTML = renderDashboard(msg.payload.days || [], msg.payload.generatedAt);
+});
+
+// ── Load data.json and render ──
+(function load() {
+  fetch('data.json?t=' + Date.now(), { cache: 'no-store' })
+    .then(function (r) {
+      if (!r.ok) throw new Error('HTTP ' + r.status);
+      return r.json();
+    })
+    .then(function (payload) {
+      if (previewMode) return; // a preview payload already won the race
+      var days = Array.isArray(payload) ? payload : (payload.days || []);
+      if (!days.length) throw new Error('no days found in data.json');
+      document.body.innerHTML = renderDashboard(days, payload.generatedAt);
+    })
+    .catch(function (err) {
+      if (previewMode) return;
+      var isLocal = window.location.protocol === 'file:';
+      document.body.innerHTML =
+        '<div class="notice"><strong>Couldn\'t load capacity data</strong>' +
+        (isLocal
+          ? 'This page was opened straight from disk, so the browser blocks reading <code>data.json</code>. Run <code>python3 -m http.server</code> in this folder and open <code>localhost:8000</code>, or just use the published GitHub Pages URL.'
+          : 'Could not fetch <code>data.json</code> (' + esc(err.message) + '). Check that the file sits next to this page and contains valid JSON.') +
+        '</div>';
+    });
 })();
 </script>
 
