@@ -1,15 +1,15 @@
 {
-  "generatedAt": "Jul 28, 2026 at 09:22 AM PDT",
+  "generatedAt": "Aug 10, 2026 at 08:55 AM PDT",
   "days": [
-    {"day":"Monday","date":"2026-07-27","am":"Esports Admin","pm":"Show","commitments":["1:1","Team Sync","Show Planning"],"cap":3},
-    {"day":"Tuesday","date":"2026-07-28","am":"Gravity Admin","pm":"VCT Challengers","commitments":["1:1","Team Sync"],"cap":2},
-    {"day":"Wednesday","date":"2026-07-29","am":"Meetings","pm":"VCT Challengers","commitments":["Team Sync"],"cap":3},
-    {"day":"Thursday","date":"2026-07-30","am":"Gravity Admin","pm":"Interviews","commitments":["Standup","1:1","Team Sync"],"cap":2},
-    {"day":"Friday","date":"2026-07-31","am":"LCK / LCP WM","pm":"","commitments":["1:1","Team Sync"],"cap":3},
-    {"day":"Monday","date":"2026-08-03","am":"Esports Admin","pm":"Gravity Admin","commitments":["1:1","Show Planning","Focus Block"],"cap":3},
-    {"day":"Tuesday","date":"2026-08-04","am":"Esports Admin","pm":"Chili","commitments":["1:1"],"cap":4},
-    {"day":"Wednesday","date":"2026-08-05","am":"Training","pm":"Training","commitments":["Team Sync"],"cap":2},
-    {"day":"Thursday","date":"2026-08-06","am":"LCP WM","pm":"TAMS / Chili","commitments":["Standup","1:1","Team Sync","Retro","All Hands"],"cap":4},
-    {"day":"Friday","date":"2026-08-07","am":"Off","pm":"Off","commitments":[],"cap":null}
+    {"day":"Monday","date":"2026-08-10","am":"Esports Admin","pm":"Gravity Admin","commitments":["Show Planning","Focus Block"],"cap":3},
+    {"day":"Tuesday","date":"2026-08-11","am":"Esports Admin","pm":"Chili","commitments":["1:1","Focus Block"],"cap":4},
+    {"day":"Wednesday","date":"2026-08-12","am":"Training","pm":"Training","commitments":["Team Sync"],"cap":2},
+    {"day":"Thursday","date":"2026-08-13","am":"LCP WM","pm":"TAMS / Chili","commitments":["Standup","1:1","Team Sync","Retro","All Hands"],"cap":4},
+    {"day":"Friday","date":"2026-08-14","am":"Gravity","pm":"Gravity","commitments":[],"cap":3},
+    {"day":"Monday","date":"2026-08-17","am":"Esports Admin","pm":"Training","commitments":["1:1","Team Sync","Show Planning","Focus Block"],"cap":2},
+    {"day":"Tuesday","date":"2026-08-18","am":"Training","pm":"Training","commitments":["Standup","All Hands"],"cap":3},
+    {"day":"Wednesday","date":"2026-08-19","am":"","pm":"","commitments":["Focus Block"],"cap":4},
+    {"day":"Thursday","date":"2026-08-20","am":"Training","pm":"LCK","commitments":["All Hands"],"cap":4},
+    {"day":"Friday","date":"2026-08-21","am":"Training","pm":"Training","commitments":["Focus Block"],"cap":3}
   ]
 }
